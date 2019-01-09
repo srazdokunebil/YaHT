@@ -11,4 +11,4 @@ Spammable Macro that only casts Aimed Shot or Multi-Shot if not reloading:
 
 Demo videos:
 
-[![Example Video](https://drive.google.com/file/d/11N_tYFM2Zv0QxTkhfF8KeaCmxLBazNme/view?usp=sharing)](https://youtu.be/xgw5TDDWmTI)
+[![Example Video](https://i.imgur.com/LBta2VD.jpg)](https://youtu.be/xgw5TDDWmTI)
