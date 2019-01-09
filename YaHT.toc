@@ -1,7 +1,7 @@
 ## Interface: 11200
-## Title: YaHT
+## Title: YaHT Deluxe
 ## Notes: Yet another Hunter Timer.
-## Author: Avi
+## Author: Avi, Deluxe: jeremymeile
 ##
 ## Dependencies:
 ## SavedVariables: YaHTdb

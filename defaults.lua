@@ -47,6 +47,8 @@ YaHT.defaults = {
 		border = 3,
 		alpha = 1,
 		malpha = 0.2,
+		aimedshot = 50,
+		multishot = 95,
 		tranqmsg = L["YaHT_TRANQMSG"],
 		tranqfailmsg = L["YaHT_FAILEDMSG"],
 	},

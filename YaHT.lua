@@ -16,12 +16,14 @@ local L = YaHT.L
 --------------------------------------------------------------------------------------------
 
 -- FUBAR Stuff -----------------------------------------------------------------------------
-YaHT.name = "YaHT"
+YaHT.name = "YaHT Deluxe"
 YaHT.hasNoColor = true
-YaHT.hasIcon = "Interface\\Icons\\Ability_UpgradeMoonglaive"
+YaHT.hasIcon = "Interface\\Icons\\ability_rogue_feigndeath"
 YaHT.defaultMinimapPosition = 180
 YaHT.cannotDetachTooltip = true
 YaHT.hideWithoutStandby = true
+UseAimedNow = false
+UseMultiNow = false
 
 function YaHT:OnClick()
 	self:ToggleLock()
@@ -153,6 +155,36 @@ function YaHT:OnInitialize()
 					},
 				},
 				order = 4,
+			},
+			autocheckcast = {
+				type = "group",
+				name = L["autocheckcast options"],
+				desc = L["autocheckcast options"],
+				args = {
+					aimedshot = {
+						type = "range",
+						name = L["Aimed Shot"],
+						desc = L["Aimed Shot"],
+						min = 5,
+						max = 95,
+						step = 5,
+						get = function() return YaHT.db.profile.aimedshot end,
+						set = function(v) YaHT.db.profile.aimedshot = v; YaHT:OnProfileEnable() end,
+						order = 31,
+					},
+					multishot = {
+						type = "range",
+						name = L["Multi-Shot"],
+						desc = L["Multi-Shot"],
+						min = 5,
+						max = 100,
+						step = 5,
+						get = function() return YaHT.db.profile.multishot end,
+						set = function(v) YaHT.db.profile.multishot = v; YaHT:OnProfileEnable() end,
+						order = 32,
+					},
+				},
+				order = 30,
 			},
 			tranqoptions = {
 				type = "group",
@@ -422,7 +454,9 @@ function YaHT:OnProfileEnable()
 	local y = YaHT.db.profile.y
 	local height = YaHT.db.profile.height
 	local width = YaHT.db.profile.width
-	
+	local aimedshot = YaHT.db.profile.aimedshot
+	local multishot = YaHT.db.profile.multishot
+
 	self.Bar:SetAlpha(YaHT.db.profile.alpha)
 	self.Bar:SetWidth(width)
 	self.Bar:SetHeight(height)
@@ -493,8 +527,12 @@ function YaHT:YAHT_ON_UPDATE()
 	local curTime = GetTime()
 	local tex = self.Bar.Texture
 	local width = YaHT.db.profile.width
+	local aimedshot = YaHT.db.profile.aimedshot
+	local multishot = YaHT.db.profile.multishot
 	if not self.SwingStart and (curTime - self.lastshot) >= self.swingtime then
 		--Start Swing timer
+		UseAimedNow = false
+		UseMultiNow = false
 		if self.shooting and not self.casting then
 			tex:SetVertexColor(YaHT.db.profile.colors.drawcolor.r,YaHT.db.profile.colors.drawcolor.g,YaHT.db.profile.colors.drawcolor.b)
 			self.Bar:SetAlpha(YaHT.db.profile.alpha)
@@ -508,6 +546,8 @@ function YaHT:YAHT_ON_UPDATE()
 			end
 		end
 	elseif self.SwingStart then
+		UseAimedNow = false
+		UseMultiNow = false
 		if self.moving then
 			self.SwingStart = curTime
 			tex:SetWidth(0.01)
@@ -517,6 +557,16 @@ function YaHT:YAHT_ON_UPDATE()
 			self.Bar:SetAlpha(YaHT.db.profile.alpha)
 		end
 	else
+		if (curTime - self.lastshot) > ((self.swingtime) * (aimedshot) / 100) then
+			UseAimedNow = false
+		else
+			UseAimedNow = true
+		end
+		if (curTime - self.lastshot) > ((self.swingtime) * (multishot) / 100) then
+			UseMultiNow = false
+		else
+			UseMultiNow = true
+		end
 		tex:SetWidth(width * (1 - math.min(((curTime - self.lastshot) / self.swingtime),1)))
 	end
 end

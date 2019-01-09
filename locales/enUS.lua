@@ -34,6 +34,7 @@ AceLocale:RegisterTranslations("enUS", function()
 		["Reset Settings"] = "Reset Settings",
 		
 		["Timer options"] = "Timer options",
+		["autocheckcast options"] = "AutoCheckCast options",
 		["Height"] = "Height",
 		["Width"] = "Width",
 		["Border Thickness"] = "Border Thickness",

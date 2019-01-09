@@ -34,6 +34,7 @@ AceLocale:RegisterTranslations("deDE", function()
 		["Reset Settings"] = "Einstellungen zurücksetzen",
 		
 		["Timer options"] = "Messleistenoptionen",
+		["autocheckcast options"] = "AutoCheckCast optionen",
 		["Height"] = "Höhe",
 		["Width"] = "Breite",
 		["Border Thickness"] = "Randbreite",
