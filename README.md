@@ -2,7 +2,7 @@
 Yet another Hunter Timer for WoW 1.12.1
 - original Addon by Avi
 
-# Modified by github.com/jeremymeile
+# Modified by github.com/Oroxzy
 
 Spammable Macro that only casts Aimed Shot or Multi-Shot if not reloading:
 
