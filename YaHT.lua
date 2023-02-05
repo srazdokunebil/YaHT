@@ -15,8 +15,6 @@ YaHT.L = AceLibrary("AceLocale-2.2"):new("YaHT")
 local L = YaHT.L
 --------------------------------------------------------------------------------------------
 
--- YOU ARE AN ASSHOLE
-
 -- FUBAR Stuff -----------------------------------------------------------------------------
 YaHT.name = "YaHT Deluxe"
 YaHT.hasNoColor = true
