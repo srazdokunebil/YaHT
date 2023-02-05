@@ -11,6 +11,7 @@ AceLocale:RegisterTranslations("enUS", function()
 		["Show 'Aimed Shot' in the castbar"] = "Show 'Aimed Shot' in the castbar",
 		["Multi-Shot in castbar"] = "Multi-Shot in castbar",
 		["Show 'Multi-Shot' in the castbar"] = "Show 'Multi-Shot' in the castbar",
+		["Show 'Truehot' in the castbar"] = "Show 'Trueshot' in the castbar",
 		["Timer Color"] = "Timer Color",
 		["Set the color of the timer between shots"] = "Set the color of the timer between shots",
 		["Draw Color"] = "Draw Color",
@@ -54,6 +55,7 @@ AceLocale:RegisterTranslations("enUS", function()
 		["Scorpid Sting"] = "Scorpid Sting",
 		["Viper Sting"] = "Viper Sting",
 		["Tranquilizing Shot"] = "Tranquilizing Shot",
+		["Trueshot"] = "Trueshot",
 		
 		["Loaded. The hunt begins!"] = "Loaded. The hunt begins!",
 		["Locked."] = "Locked.",

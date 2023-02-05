@@ -24,6 +24,7 @@ YaHT.cannotDetachTooltip = true
 YaHT.hideWithoutStandby = true
 UseAimedNow = false
 UseMultiNow = false
+UseTrueshotNow = false
 
 function YaHT:OnClick()
 	self:ToggleLock()
@@ -59,6 +60,14 @@ function YaHT:OnInitialize()
 				get = function() return YaHT.db.profile.multi end,
 				set = function() YaHT.db.profile.multi = not YaHT.db.profile.multi end,
 				order = 3,
+			},
+			trueshot = {
+				name = L["Trueshot in castbar"],
+				desc = L["Show 'Trueshot' in the castbar"],
+				type = "toggle",
+				get = function() return YaHT.db.profile.trueshot end,
+				set = function() YaHT.db.profile.trueshot = not YaHT.db.profile.trueshot end,
+				order = 4,
 			},
 			timer = {
 				type = "group",
@@ -183,6 +192,17 @@ function YaHT:OnInitialize()
 						set = function(v) YaHT.db.profile.multishot = v; YaHT:OnProfileEnable() end,
 						order = 32,
 					},
+					trueshot = {
+						type = "range",
+						name = L["Trueshot"],
+						desc = L["Trueshot"],
+						min = 5,
+						max = 100,
+						step = 5,
+						get = function() return YaHT.db.profile.trueshot end,
+						set = function(v) YaHT.db.profile.trueshot = v; YaHT:OnProfileEnable() end,
+						order = 33,
+					},
 				},
 				order = 30,
 			},
@@ -272,6 +292,7 @@ function YaHT:OnInitialize()
 		[L["Serpent Sting"]] = true,
 		[L["Viper Sting"]] = true,
 		[L["Tranquilizing Shot"]] = true,
+		[L["Trueshot"]] = true,
 	}
 	self.ChatTypes = {
 		["SAY"] = true,
@@ -395,6 +416,9 @@ function YaHT:StartCast(spellName, rank)
 		self.casttime = 0.5
 	elseif spellName == L["Tranquilizing Shot"] and YaHT.db.profile.tranq then
 		self:ScheduleEvent("YaHT_TRANQ", self.Announce, 0.2, self, string.gsub(YaHT.db.profile.tranqmsg,"%%t",UnitName("target")))
+	elseif spellName == L["Trueshot"] then
+		castbar = YaHT.db.profile.trueshot
+		self.casttime = 1.0
 	end
 	if not self.casttime then
 		self.casting = true
@@ -533,6 +557,7 @@ function YaHT:YAHT_ON_UPDATE()
 		--Start Swing timer
 		UseAimedNow = false
 		UseMultiNow = false
+		UseTrueshotNow = false
 		if self.shooting and not self.casting then
 			tex:SetVertexColor(YaHT.db.profile.colors.drawcolor.r,YaHT.db.profile.colors.drawcolor.g,YaHT.db.profile.colors.drawcolor.b)
 			self.Bar:SetAlpha(YaHT.db.profile.alpha)
@@ -548,6 +573,7 @@ function YaHT:YAHT_ON_UPDATE()
 	elseif self.SwingStart then
 		UseAimedNow = false
 		UseMultiNow = false
+		UseTrueshotNow = false
 		if self.moving then
 			self.SwingStart = curTime
 			tex:SetWidth(0.01)
@@ -566,6 +592,11 @@ function YaHT:YAHT_ON_UPDATE()
 			UseMultiNow = false
 		else
 			UseMultiNow = true
+		end
+		if (curTime - self.lastshot) > ((self.swingtime) * (aimedshot) / 100) then
+			UseTrueshotNow = false
+		else
+			UseTrueshotNow = true
 		end
 		tex:SetWidth(width * (1 - math.min(((curTime - self.lastshot) / self.swingtime),1)))
 	end
